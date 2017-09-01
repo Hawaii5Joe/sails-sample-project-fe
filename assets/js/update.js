@@ -42,10 +42,66 @@
 
  (function(){
 
-   $(function(){
+  $(function(){
 
-    //code goes here
+    let searchURL;
 
-   })
+    $("#updateStudentForm :input").prop("disabled", true);
 
- })();
+
+    $('#student_id').selectpicker({
+       style: 'btn-info',
+       size: 4,
+       liveSearch: true,
+       showTick: true,
+       tickIcon: 'glyphicon-user',
+       header: "Student search"
+      });
+
+    $("#student_id").change(function () {
+        $("#updateStudentForm :input").prop("disabled", false);
+
+       searchURL = $(this).find("option:selected").val();
+        console.log(searchURL);
+
+       $.get("http://localhost:1337/student/" + searchURL, function (data) {
+
+         console.log(data.first_name);
+
+         $.each(data, function(name, val){
+
+        // find the name attribute of each piece of data in your object
+            let el = $('[name="'+name+'"]')
+        // find the type of data
+            let type = el.attr('type');
+
+        // set element equal to to the value that is coming back from the api
+            switch(type){
+              default:
+                el.val(val);
+              }
+
+         });
+
+       })
+
+     });
+
+     $('#updateStudentForm').submit(function () {
+       let updateFormData = $('#updateStudentForm').serialize()
+       //make put request to the api
+       $.ajax({
+         url: "http://localhost:1337/student/" + searchURL,
+         method: "PUT",
+         data: updateFormData,
+         success: function(data){
+           alert("Your Record Has Been Updated :)")
+         }
+       })
+     })
+
+
+//Jquery brackets
+  })
+//Self-invoking brackets
+})();

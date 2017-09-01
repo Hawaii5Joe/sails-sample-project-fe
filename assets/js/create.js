@@ -28,7 +28,45 @@
 
   $(function(){
 
-  	//code goes here
+    $("#addStudentForm").validate({
+      debug: true,
+
+      errorClass: 'text-danger',
+
+      rules:{
+
+        first_name:{
+          minlength: 2,
+          required: true
+        },
+
+        last_name:{
+          minlength: 2,
+          required: true
+        },
+
+        start_date:{
+          dateISO:true
+        },
+
+        gpa: {
+          min: 2.0
+        }
+
+      },
+
+      messages: {
+
+        first_name: {
+          minlength: "two characters required"
+        },
+
+        gpa:{
+          min: "stay in school if you're below this"
+        }
+
+      }
+});
 
   })
 

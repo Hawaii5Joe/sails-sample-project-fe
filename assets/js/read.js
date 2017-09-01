@@ -34,7 +34,19 @@
 
    $(function(){
 
-   	//code goes here
+      //column reordering for this datatable situation
+      colReorder: true
+      //csv print export functionality
+     $('#studentTable').DataTable({
+
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        "scrollX": true
+
+     });
+
 
    })
 
